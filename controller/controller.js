@@ -1,9 +1,6 @@
 const express = require('express')
 
-const { users } = require('../model/data')
-
-const router = require('../routes/users')
-
+const { users, movies, rentItems} = require('../model/data')
 
 //USERS ENDPOINT
 const getUser  =  (req, res) =>{
