@@ -4,8 +4,6 @@ const router = express.Router()
 
 const controller = require('../controller/controller')
 
-const { users } = require('../model/data')
-
 // Get Users
 router.get('/',controller.getUser) 
 
@@ -18,6 +16,7 @@ router.post('/', controller.addUser )
 // Update an existing User
 router.put('/:id', controller.updateUser)
 
+//Delete a user
 router.delete('/:id', controller.deleteUser)
 
 

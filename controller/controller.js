@@ -1,9 +1,6 @@
-
-
 const {Movie, validateMovie} = require('../model/movie')
 const { User, validateUser } = require('../model/user')
-const { Rental, validateRental, Customer } = require('../model/rental')
-
+const { Rental, validateRental} = require('../model/rental')
 
 //USERS ENDPOINT
 const getUser  =  async(req, res) =>{
@@ -38,14 +35,13 @@ const addUser = async (req, res) => {
 const updateUser = async (req, res) => {
     //validate request body parameters
     const { error } = validateUser(req.body); 
-  
     if (error) return res.status(400).send(error.details[0].message);
     const user = await User.findByIdAndUpdate(req.params.id, {
         email: req.body.email
     }, {new: true})
+    
     //validate user
     if(!user) return res.status(404).json({status: "Failed", message: "User does not exist"})
-    
     res.json({status: "success", message: "User updated successfully", data: user})
 }
 
@@ -53,7 +49,6 @@ const deleteUser = async (req, res) => {
     const user = await User.findByIdAndRemove(req.params.id)
     //validate user
     if(!user) return res.status(404).json({status: "Failed", message: "The user with the given ID was not found"})
-
     res.json({status: "success", message: "User successfully deleted", data: user})
 }
 
@@ -84,7 +79,7 @@ const addMovie = async (req, res) => {
         genre: req.body.genre,
         yearOfRelease: req.body.yearOfRelease
     })
-    //Add movie to existing movies collection
+    //Save movie to existing movies collection
     movie = await movie.save()
 
     res.json({status: "success", message: "Movie successfully added", data: movie})       
@@ -131,14 +126,10 @@ const getItemById = async (req, res) => {
 }
 
 
-
 const addRentItem = async (req, res) => {
     //validate request body parameters
     const { error } = validateRental(req.body)
     if (error) return res.status(400).send(error.details[0].message);
-
-
-    
 
     let rentItem = new Rental({
 
@@ -148,11 +139,7 @@ const addRentItem = async (req, res) => {
             durationOfLease: req.body.durationOfLease,
             name: req.body.name,
             phone: req.body.phone,
-            address: req.body.address
-          
-              
-            
-       
+            address: req.body.address           
     })
     rentItem = await rentItem.save()
     res.json({status: "success", message: "New Item request successfully created", data:rentItem})
@@ -178,8 +165,6 @@ const updateRentItem = async (req, res) => {
     
     //validate if item with the given Id exist
     if(!rentItem) return res.status(404).json({status: "Failed", message: "The rentItem with the given ID was not found"})
-
-    
     res.json({status: "success", message: "Item successfully updated", data: rentItem})
 }
 

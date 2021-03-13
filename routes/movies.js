@@ -4,7 +4,7 @@ const router = express.Router()
 
 const controller = require('../controller/controller')
 
-// const {Movie, validateMovie} = require('../model/movie')
+
 
 //Get Movies
 router.get('/', controller.getMovie)
